@@ -31,10 +31,17 @@ for key, value in encryption_dict.items():
 
 
 def valid_parameter():
+    """
+    returns true if the first parameter equals to encrypt or decrypt, false if it isn't.
+    """
     return sys.argv[1] == "encrypt" or sys.argv[1] == "decrypt"
 
 
 def encrypt_assert():
+    """
+    checks if using the exact same encryption method as the regular encryption function encrypts the message
+    as it supposed to.
+    """
     str_tst = 'My bounty is as boundless as the sea, My love as deep; the more' \
               ' I give to thee, The more I have, for both are infinite.'
     encrypted_str_tst_supposedly = '48,96,98,13,36,92,35,91,96,98,30,90,98,12,90,98,13,36,92,35,15,33,16,90,' \
@@ -52,6 +59,10 @@ def encrypt_assert():
 
 
 def main():
+    """
+    using all the functions in the code to encrypt a message and save it to a file,
+    or decrypt from a file.
+    """
     if sys.argv[1] == 'encrypt':
         print("you chose to encrypt.")
         encrypted_message = (input("what's the message you would like to encrypt: "))
@@ -79,11 +90,17 @@ def encrypt(input_str):
 
 
 def save_to_file(encrypted_text):
+    """
+    copies text to a file and save it.
+    """
     with open('encrypted_message.txt', 'w') as f:
         f.write(encrypted_text)
 
 
 def decrypt_from_file(filename):
+    """
+    decrypts the text from the file to the original message that was written.
+    """
     with open(filename, 'r') as f:
         encrypted_text = f.read()
 
