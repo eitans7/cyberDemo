@@ -7,6 +7,14 @@ for parameter decrypt - decrypts a file content and prints it
 Date: 27-09-23
 """
 import sys
+import logging
+import os
+
+
+LOG_FORMAT = '%(levelname)s | %(asctime)s | %(message)s'
+LOG_LEVEL = logging.DEBUG
+LOG_DIR = 'log'
+LOG_FILE = LOG_DIR + '/lucky.log'
 
 
 encryption_dict = {'A': 56, 'B': 57, 'C': 58, 'D': 59, 'E': 40, 'F': 41, 'G': 42, 'H': 43, "I": 44, "J": 45,
@@ -44,11 +52,12 @@ def encrypt_assert():
 
 
 def main():
-    assert valid_parameter()
-    assert encrypt_assert()
     if sys.argv[1] == 'encrypt':
         print("you chose to encrypt.")
-        encrypted_message = encrypt(input("what's the message you would like to encrypt: "))
+        encrypted_message = (input("what's the message you would like to encrypt: "))
+        logging.debug('the message: ' + encrypted_message)
+        encrypted_message = encrypt(encrypted_message)
+        logging.debug('the encrypted message: ' + encrypted_message)
         save_to_file(encrypted_message)
     if sys.argv[1] == 'decrypt':
         print("you chose to decrypt.")
@@ -96,4 +105,9 @@ def decrypt_from_file(filename):
 
 
 if __name__ == '__main__':
+    assert valid_parameter()
+    assert encrypt_assert()
+    if not os.path.isdir(LOG_DIR):
+        os.makedirs(LOG_DIR)
+    logging.basicConfig(format=LOG_FORMAT, filename=LOG_FILE, level=LOG_LEVEL)
     main()
